@@ -1,5 +1,7 @@
 from typing import Any, Dict, List, Optional
 import asyncpg
+import json
+
 
 def record_to_dict(r: asyncpg.Record) -> Dict[str, Any]:
     return dict(r) if r is not None else {}
@@ -7,7 +9,7 @@ def record_to_dict(r: asyncpg.Record) -> Dict[str, Any]:
 async def call_fn_many(pool: asyncpg.Pool, fn: str, accion: str, payload: dict) -> List[dict]:
     sql = f"SELECT * FROM adhd.{fn}($1::text, $2::jsonb)"
     async with pool.acquire() as conn:
-        rows = await conn.fetch(sql, accion, payload)
+        rows = await conn.fetch(sql, accion, json.dumps(payload) if payload is not None else None)
     return [record_to_dict(r) for r in rows]
 
 async def call_fn_one(pool: asyncpg.Pool, fn: str, accion: str, payload: dict) -> Optional[dict]:

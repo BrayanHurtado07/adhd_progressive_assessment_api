@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from .db import get_pool, close_pool
 from .routers import (
     institutions, users, students, guardians, consents,
-    snap, cognitive, activities, sessions, alerts, reports
+    snap, cognitive, activities, sessions, alerts, reports, ml
 )
 
 load_dotenv()
@@ -43,3 +43,5 @@ app.include_router(activities.router,   prefix="/activities",   tags=["Activitie
 app.include_router(sessions.router,     prefix="/sessions",     tags=["Sessions"])
 app.include_router(alerts.router,       prefix="/alerts",       tags=["Alerts"])
 app.include_router(reports.router,      prefix="/reports",      tags=["Reports"])
+app.include_router(ml.router,           prefix="/ml",           tags=["ML"])
+

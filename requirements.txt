@@ -3,3 +3,4 @@ uvicorn[standard]
 asyncpg
 python-dotenv
 pydantic>=2
+pandas
