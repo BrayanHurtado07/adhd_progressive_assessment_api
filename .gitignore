@@ -1,0 +1,77 @@
+# --- Python / FastAPI ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+.eggs/
+dist/
+build/
+wheels/
+pip-wheel-metadata/
+*.spec
+
+# Virtualenvs (Windows/Linux/Mac)
+venv/
+.venv/
+env/
+.env/
+ENV/
+.antenv/            # venv que crea Oryx en Azure
+.python_packages/   # paquetes publicados por Oryx
+
+# Herramientas / IDEs
+.vscode/
+.vscode-test/
+.idea/
+*.code-workspace
+
+# Pruebas / Tipado
+.pytest_cache/
+.coverage*
+htmlcov/
+.tox/
+.mypy_cache/
+.pyre/
+.pyright/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Logs y runtime
+*.log
+logs/
+celerybeat-schedule
+instance/
+db.sqlite3
+
+# Sistemas operativos
+.DS_Store
+Thumbs.db
+
+# Entornos / Config
+# (Ignora tu .env real, pero permite .env.example)
+.env
+.env.*.local
+!.env.example
+
+# Azure / Deploy artefacts
+# ZipDeploy / Kudu outputs (por si los llegas a volcar local)
+oryx-manifest.toml
+oryx-build.log
+oryx*.log
+.scm/
+.ssh/
+
+# Artifacts del proyecto
+artifacts/**
+!artifacts/*.joblib   # Permite subir modelos .joblib si lo necesitas
+
+# Node (por si tienes frontend dentro del repo)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-lock.yaml
