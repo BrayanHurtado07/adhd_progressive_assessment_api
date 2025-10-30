@@ -6,12 +6,14 @@ from dotenv import load_dotenv
 from .db import get_pool, close_pool
 from .routers import (
     institutions, users, students, guardians, consents,
-    snap, cognitive, activities, sessions, alerts, reports, ml
+    snap, cognitive, activities, sessions, alerts, reports, ml, auth
 )
 
 load_dotenv()
 
 app = FastAPI(title="ADHD Progressive Assessment API", version="1.0.0")
+app.router.redirect_slashes = False
+
 
 # CORS para Flutter web / móvil (ajusta orígenes)
 origins = [o.strip() for o in os.getenv("CORS_ORIGINS", "*").split(",")]
@@ -32,6 +34,7 @@ async def shutdown():
     await close_pool()
 
 # Routers
+app.include_router(auth.router,        prefix="/auth",        tags=["Auth"])
 app.include_router(institutions.router, prefix="/institutions", tags=["Institutions"])
 app.include_router(users.router,        prefix="/users",        tags=["Users"])
 app.include_router(students.router,     prefix="/students",     tags=["Students"])

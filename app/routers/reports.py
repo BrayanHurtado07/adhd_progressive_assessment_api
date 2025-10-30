@@ -4,9 +4,10 @@ from ..utils import fn_report_student_period
 
 router = APIRouter()
 
+# POST /reports/generate  y con slash
 @router.post("/generate")
+@router.post("/generate/", include_in_schema=False)
 async def generate(body: dict, pool=Depends(db_pool)):
-    # body: {student_id, period_start (YYYY-MM-DD), period_end, generated_by}
     return await fn_report_student_period(
         pool,
         body["student_id"], body["period_start"], body["period_end"], body["generated_by"]
