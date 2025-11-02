@@ -42,7 +42,7 @@ async def fn_compute_snap_scores(pool: asyncpg.Pool, form_id: str) -> dict | Non
         row = await conn.fetchrow(sql, form_id)
     return record_to_dict(row)
 
-async def fn_report_student_period(pool: asyncpg.Pool, student_id: str, start: str, end: str, generated_by: str) -> dict | None:
+async def fn_report_student_period(pool: asyncpg.Pool, student_id: str, start: date, end: date, generated_by: str) -> dict | None:
     sql = "SELECT * FROM adhd.fn_report_student_period($1::uuid,$2::date,$3::date,$4::uuid)"
     async with pool.acquire() as conn:
         row = await conn.fetchrow(sql, student_id, start, end, generated_by)
