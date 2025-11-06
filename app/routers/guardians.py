@@ -19,18 +19,25 @@ async def list(institution_id: str | None = None, q: str | None = None, pool=Dep
 
 def _normalize_relation(raw: str | None) -> str:
     """
-    Normaliza valores desde app ('Padre', 'Docente', 'Tutor') a lo que la BD espera.
-    Ajusta aquí si tu enum/constraint usa otras etiquetas.
+    Normaliza valores desde la app a los que la BD acepta:
+    CHECK (relation IN ('padre','madre','tutor','apoderado'))
     """
     val = (raw or "").strip().lower()
-    if val in ("padre", "madre", "apoderado", "encargado", "parent"):
-        return "parent"
+
+    # Padre / madre / apoderado
+    if val in ("padre", "parent", "madre", "apoderado", "encargado"):
+        return "padre"
+
+    # Docente -> lo tratamos como "tutor" (o "apoderado", si prefieres)
     if val in ("docente", "maestro", "profesor", "teacher"):
-        return "teacher"
+        return "tutor"
+
+    # Si ya viene como 'tutor'
     if val in ("tutor",):
         return "tutor"
-    # fallback seguro
-    return "parent"
+
+    # Fallback seguro
+    return "apoderado"
 
 # POST /guardians/link  y /guardians/link/
 @router.post("/link")
